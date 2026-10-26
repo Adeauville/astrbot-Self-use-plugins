@@ -31,3 +31,6 @@ AstrBot 管理员插件：群内执行 `/sid`，**群聊无任何输出，信息
 1. 机器人需要具备给管理员发送私聊消息的权限，否则群内调用 `/sid` 将无法收到返回信息
 2. 仅支持 AstrBot Star 插件框架
 3. 版本：`v1.0.0`
+本人仅测试了QQ官方bot，需要@ bot再加上指令才能执行，小号bot没试过，不知道要不要@ bot才能执行，怕被封号不敢用小号部署。
+<img width="337" height="68" alt="image" src="https://github.com/user-attachments/assets/a655e270-82e5-4072-8df0-b3c485721d14" />
+<img width="263" height="137" alt="image" src="https://github.com/user-attachments/assets/19db342c-f175-408a-b0c8-1150a269bce3" />
