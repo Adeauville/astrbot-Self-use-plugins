@@ -1,0 +1,33 @@
+name: Tag推送自动打包并创建Release
+on:
+  push:
+    tags:
+      - 'v*'  # 只要推送v开头的tag就触发（v1.0.0、v1.0.1）
+  workflow_dispatch: # 额外支持手动点按钮触发
+
+permissions:
+  contents: write # 必须这个权限，才能新建release、上传附件
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取当前tag对应的代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 打包插件，自定义文件名
+        run: |
+          PLUGIN_NAME="${GITHUB_REF#refs/tags/v}"
+          zip -r "${PLUGIN_NAME}.zip" . -x ".github/*" ".git/*"
+        # 打包出来的名字：1.0.0.zip，你也可以改成 sid-private-${PLUGIN_NAME}.zip
+
+      - name: 创建Release并上传插件包
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "${GITHUB_REF#refs/tags/v}.zip"
+          generate_release_notes: false # 关闭自动备注
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
