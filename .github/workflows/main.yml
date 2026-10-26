@@ -1,0 +1,17 @@
+name: 自动打包插件ZIP
+on:
+  push:
+    branches: [ '*' ] # 所有分支推送都会触发打包
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取当前分支代码
+        uses: actions/checkout@v4
+      - name: 打包插件（排除github配置文件夹）
+        run: zip -r plugin.zip . -x ".github/*" ".git/*"
+      - name: 上传打包好的zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.ref_name }}-插件包
+          path: plugin.zip
